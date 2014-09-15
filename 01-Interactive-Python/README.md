@@ -4,14 +4,17 @@ http://www.codeskulptor.org/
 
 * * *
 
-* Guess the Number Game
+* 2: Guess the Number Game
 http://www.codeskulptor.org/#user37_M3FHDiKFCq_14.py
 
-* Stopwatch: The Game
-http://www.codeskulptor.org/#user12_44u5YQUsz1yDyqr.py
+* 3: Stopwatch: The Game
+http://www.codeskulptor.org/#user37_44u5YQUsz1yDyqr_0.py
 
-* Memory Game
+* 4: Pong
+http://www.codeskulptor.org/#user37_40scB4HIpjqR5pd_3.py
+
+* 5: Memory Game
 http://www.codeskulptor.org/#user14_gUszuqFauGJe3TP.py
 
-* Blackjack
+* 6: Blackjack Game
 http://www.codeskulptor.org/#user15_cU02IPd62oCuuOz.py

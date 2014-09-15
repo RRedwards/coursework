@@ -59,7 +59,7 @@ def timer_handler():
 def draw(canvas):
     global current_time
     canvas.draw_text(format_time(current_time), (90, 110), 36, "White")
-    canvas.draw_text(str(wins) + "/" + str(tries), (240, 30), 24, "Green")
+    canvas.draw_text(str(wins) + "/" + str(tries), (240, 30), 24, "Yellow")
     
 # create frame, create timer
 frame = simplegui.create_frame("Stopwatch Game", 300, 200)
@@ -70,6 +70,9 @@ frame.add_button("Start", start_timer, 50)
 frame.add_button("Stop", stop_timer, 50)
 frame.add_button("Reset", reset_timer, 50)
 frame.set_draw_handler(draw)
+
+# add instructions
+frame.add_label('Goal is to stop on a whole second (e.g., 0:03.0)')
 
 # start frame
 frame.start()
