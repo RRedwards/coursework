@@ -21,14 +21,12 @@ def init():
         guess_count = 7
         print "New Game.  Range is from 0 to 100"
         print "Number of remaining guesses is ", guess_count
-        #print "Secret number is: ", secret_num # for testing
         print
     elif num_range == 1000:
         secret_num = random.randrange(0,1000)
         guess_count = 10
         print "New Game.  Range is from 0 to 1000"
         print "Number of remaining guesses is ", guess_count
-        #print "Secret number is: ", secret_num # for testing
         print
     else:
         print "Error in determining num_range"
@@ -55,21 +53,20 @@ def get_input(guess):
     global secret_num
     
     guess_count -= 1
+    guessed_num = int(guess)
     
-    if (guess_count >= 1) and (float(guess) != secret_num):
+    if (guess_count >= 1) and (guessed_num != secret_num):
         print "Guess was ", guess
         print "Number of remaining guesses is ", guess_count
-        #print "Secret number is: ", secret_num # for testing
-        if float(guess) > secret_num:
+        if guessed_num > secret_num:
             print "Lower!"
             print
         else:
             print "Higher!"
             print
-    elif float(guess) == secret_num:
+    elif guessed_num == secret_num:
         print "Guess was ", guess
         print "Number of remaining guesses is ", guess_count
-        #print "Secret number is: ", secret_num # for testing
         print "Correct!!!"
         print
         print
