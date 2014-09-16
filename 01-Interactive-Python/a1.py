@@ -34,6 +34,7 @@ tie_size = (360, 480)
 query = 'rock, paper, scissors, lizard, or Spock?'
 player_choice = ''
 comp_choice = ''
+win_method = ''
 winner = ''
 image_num = 5
 
@@ -46,6 +47,12 @@ image_dict = {0: (rock_image, rock_size), \
               4: (scissors_image, scissors_size), \
               5: (rpsls_image, rpsls_size), \
               6: (tie_image, tie_size)}
+# read verb grid as "row 'verb' column" or "winner 'verb' loser"
+verb_grid = [[None, None, None, 'crushes', 'crushes'], \
+             ['vaporizes', None, None, None, 'smashes'], \
+             ['covers', 'disproves', None, None, None], \
+             [None, 'poisons', 'eats', None, None], \
+             [None, None, 'cut', 'decapitate', None]]
               
 # constants
 MSG2_SIZE = 24
@@ -65,7 +72,7 @@ def rpsls(name):
     takes player's choice as input, randomly generates computer's choice,
     calculates and prints result of game
     """
-    global player_choice, comp_choice, winner, image_num
+    global player_choice, comp_choice, winner, image_num, win_method
     
     # convert name to player_number
     player_number = item_dict.get(name)
@@ -74,6 +81,7 @@ def rpsls(name):
     if player_number == None:
         player_choice = 'Invalid input. No ' + name + " in RPSLS."
         comp_choice = ''
+        win_method = ''
         winner = ''
         image_num = 5
         return
@@ -82,28 +90,33 @@ def rpsls(name):
     comp_number = random.randrange(0,5)
 
     # compute difference of player_number and comp_number modulo five
+    # (could use verb_grid to compute winner, but d = p1 - p2 % 5 is probably faster & easier)
     difference = (player_number - comp_number) % 5
+    
+    # convert comp_number to name using number_to_name
+    comp_name = number_to_name(comp_number)
 
     # use if/elif/else to determine winner
     if (difference == 1) or (difference == 2):
         winner = "Player wins!"
         image_num = player_number
+        win_method = ' '.join([name, verb_grid[player_number][comp_number], comp_name + '...'])
     elif (difference == 3) or (difference == 4):
         winner = "Computer wins!"
         image_num = comp_number
+        win_method = ' '.join([comp_name, verb_grid[comp_number][player_number], name + '...'])
     elif difference == 0:
         winner = "Player and computer tie!"
         image_num = 6
+        win_method = ''
     else:
         winner = "Error computing winner."
-
-    # convert comp_number to name using number_to_name
-    comp_name = number_to_name(comp_number)
     
     # update player and computer choice for display
     player_choice = "Player chooses " + name
     comp_choice = "Computer chooses " + comp_name
-     
+    
+    
     
 # Handler for input field
 def get_guess(guess):
@@ -114,13 +127,14 @@ def draw(canvas):
     canvas.draw_text(query, [50, 35], 32, "LightGreen")
     canvas.draw_text(player_choice, [50, 70], MSG2_SIZE, MSG2_COLOR)
     canvas.draw_text(comp_choice, [50, 100], MSG2_SIZE, MSG2_COLOR)
-    canvas.draw_text(winner, [50, 130], MSG2_SIZE, MSG2_COLOR)
+    canvas.draw_text(win_method, [50, 130], MSG2_SIZE, MSG2_COLOR)
+    canvas.draw_text(winner, [50, 160], MSG2_SIZE, MSG2_COLOR)
     canvas.draw_image(image_dict[image_num][0], \
                       (image_dict[image_num][1][0] // 2, image_dict[image_num][1][1] // 2), \
                       (image_dict[image_num][1][0], image_dict[image_num][1][1]), \
                       (400, 475), \
                       (image_dict[image_num][1][0], image_dict[image_num][1][1]))
-    canvas.draw_polygon([[0, 150], [800, 150]], 2, "White")
+    canvas.draw_polygon([[0, 170], [800, 170]], 2, "White")
 
 
 # Create frame and assign callbacks to event handlers
@@ -131,10 +145,4 @@ frame.set_draw_handler(draw)
 
 # Start the frame animation
 frame.start()
-
-
-###################################################
-# idea for upgrade:
-# add matrix for how items beat other items
-# and output messages like "Paper disproves Spock.  Paper wins!"
 
