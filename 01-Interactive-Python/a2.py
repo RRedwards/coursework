@@ -1,4 +1,4 @@
-# template for "Guess the number" mini-project
+# my "Guess the number" mini-project
 # input will come from buttons and an input field
 # all output for the game will be printed in the console
 
@@ -11,7 +11,7 @@ num_range = 100
 secret_num = 0
 guess_count = 7
 
-#helper function to initial game
+#helper function to initialize game
 def init():
     global num_range
     global guess_count
@@ -21,14 +21,14 @@ def init():
         guess_count = 7
         print "New Game.  Range is from 0 to 100"
         print "Number of remaining guesses is ", guess_count
-#        print "Secret number is: ", secret_num # for testing
+        #print "Secret number is: ", secret_num # for testing
         print
     elif num_range == 1000:
         secret_num = random.randrange(0,1000)
         guess_count = 10
         print "New Game.  Range is from 0 to 1000"
         print "Number of remaining guesses is ", guess_count
-#        print "Secret number is: ", secret_num   # for testing
+        #print "Secret number is: ", secret_num # for testing
         print
     else:
         print "Error in determining num_range"
@@ -54,21 +54,34 @@ def get_input(guess):
     global guess_count
     global secret_num
     
-    float_guess = float(guess)
     guess_count -= 1
     
-    print "Guess was ", guess
-    print "Number of remaining guesses is ", guess_count
-#    print "Secret number is: ", secret_num   # for testing
-    if float_guess == secret_num:
-        print "Correct!"
+    if (guess_count >= 1) and (float(guess) != secret_num):
+        print "Guess was ", guess
+        print "Number of remaining guesses is ", guess_count
+        #print "Secret number is: ", secret_num # for testing
+        if float(guess) > secret_num:
+            print "Lower!"
+            print
+        else:
+            print "Higher!"
+            print
+    elif float(guess) == secret_num:
+        print "Guess was ", guess
+        print "Number of remaining guesses is ", guess_count
+        #print "Secret number is: ", secret_num # for testing
+        print "Correct!!!"
         print
-    elif float_guess > secret_num:
-        print "Lower!"
         print
-    else:
-        print "Higher!"
+        init()
+    else:    
+        print "Guess was ", guess
+        print "Number of remaining guesses is ", guess_count
+        print "You Lost!!!"
+        print "The secret number was: ", secret_num
         print
+        print
+        init()
         
     
 # create frame
@@ -86,4 +99,4 @@ f.start()
 
 init()
 
-# always remember to check your completed program against the grading rubric
+# checked completed program against the grading rubric
